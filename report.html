@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Our Love Story ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+
+<style>
+:root {
+    --primary: #ff4d6d;
+    --secondary: #ff8fa3;
+    --glass: rgba(255, 255, 255, 0.9);
+    --text: #590d22;
+}
+
+* { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+
+body, html {
+    margin: 0; padding: 0;
+    height: 100%; width: 100%;
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #a1c4fd);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--text);
+    overflow: hidden;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
+}
+
+.page {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    padding: env(safe-area-inset-top) 25px calc(env(safe-area-inset-bottom) + 80px);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.page.active { display: flex; animation: fadeIn 0.5s ease; }
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+h1 { font-family: 'Dancing Script', cursive; font-size: 2.8rem; color: var(--primary); margin: 0 0 10px; }
+h2 { font-family: 'Dancing Script', cursive; font-size: 2.2rem; color: var(--primary); margin-bottom: 20px;}
+
+.glass {
+    background: var(--glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 25px;
+    padding: 25px;
+    width: 100%;
+    max-width: 350px;
+}
+
+.nav-btn {
+    margin-top: 20px;
+    padding: 12px 35px;
+    border-radius: 50px;
+    border: none;
+    background: var(--primary);
+    color: white;
+    font-weight: 800;
+    font-size: 1rem;
+}
+
+/* GALLERY GRID */
+.gallery-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; width: 100%; }
+.polaroid {
+    background: white; padding: 8px 8px 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: rotate(var(--r));
+}
+.polaroid img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 4px; }
+.polaroid p { font-size: 0.8rem; margin: 5px 0 0; font-family: 'Dancing Script'; }
+
+/* BIG LETTER SYSTEM */
+.envelope-box { width: 180px; height: 120px; background: var(--secondary); position: relative; cursor: pointer; border-radius: 0 0 10px 10px; margin-top: 40px; }
+.envelope-box::before { content: ''; position: absolute; top: 0; left: 0; border-left: 90px solid transparent; border-right: 90px solid transparent; border-top: 65px solid var(--primary); }
+
+#letter-modal {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(8px); z-index: 1000; justify-content: center; align-items: center; padding: 20px;
+}
+.letter-paper {
+    background: #fff; width: 100%; max-width: 350px; max-height: 80vh;
+    border-radius: 20px; padding: 40px 25px; overflow-y: auto; text-align: left;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); position: relative;
+}
+
+/* ASK SECTION */
+.btn-group { display: flex; flex-direction: column; gap: 15px; width: 100%; align-items: center; margin-top: 20px; }
+.yes-btn { 
+    background: #4CAF50; color: white; padding: 18px 50px; border-radius: 50px; 
+    border: none; font-size: 1.4rem; font-weight: bold; width: 80%;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 10;
+}
+.no-btn { 
+    background: #fff; color: #888; padding: 10px 25px; border-radius: 50px; 
+    border: 1px solid #ddd; font-size: 0.9rem;
+    position: relative; transition: all 0.2s ease;
+    z-index: 5;
+}
+
+/* PROGRESS */
+.progress { position: fixed; bottom: calc(env(safe-area-inset-bottom) + 15px); left: 50%; transform: translateX(-50%); display: flex; gap: 8px; }
+.dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); }
+.dot.active { background: var(--primary); width: 18px; border-radius: 10px; transition: 0.3s; }
+
+@keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+
+<body>
+
+<audio id="music" loop><source src="zindagi-haseen.mp3" type="audio/mpeg"></audio>
+
+<section class="page active">
+    <div class="glass"><h1 id="typing"></h1><button class="nav-btn" onclick="start()">Start ➡️</button></div>
+</section>
+
+<section class="page">
+    <h2>🎵 Our Soundtrack</h2>
+    <div style="width:140px; height:140px; background:#111; border-radius:50%; margin:20px auto; border:4px solid #333; animation: spin 4s linear infinite; display:flex; align-items:center; justify-content:center;">
+        <div style="width:40px; height:40px; background:var(--primary); border-radius:50%; border:2px solid white;"></div>
+    </div>
+    <p><b>Zindagi Haseen</b></p>
+    <button class="nav-btn" onclick="next()">Memories ➡️</button>
+</section>
+
+<section class="page">
+    <h2>✨ The Beginning</h2>
+    <div class="gallery-grid">
+        <div class="polaroid" style="--r:-2deg"><img src="img1.jpg"><p>Memory 1</p></div>
+        <div class="polaroid" style="--r:3deg"><img src="img2.jpg"><p>Memory 2</p></div>
+    </div>
+    <button class="nav-btn" onclick="next()">Next ➡️</button>
+</section>
+
+<section class="page">
+    <h2>🌍 Best Trips</h2>
+    <div class="gallery-grid">
+        <div class="polaroid" style="--r:1deg"><img src="img3.jpg"><p>Memory 3</p></div>
+        <div class="polaroid" style="--r:-3deg"><img src="img4.jpg"><p>Memory 4</p></div>
+    </div>
+    <button class="nav-btn" onclick="next()">Next ➡️</button>
+</section>
+
+<section class="page">
+    <h2>🤪 Silly Us</h2>
+    <div class="gallery-grid">
+        <div class="polaroid" style="--r:-2deg"><img src="img5.jpg"><p>Memory 5</p></div>
+        <div class="polaroid" style="--r:2deg"><img src="img6.jpg"><p>Memory 6</p></div>
+    </div>
+    <button class="nav-btn" onclick="next()">Next ➡️</button>
+</section>
+
+<section class="page">
+    <h2>🏠 Forever</h2>
+    <div class="gallery-grid">
+        <div class="polaroid" style="--r:1deg"><img src="img7.jpg"><p>Memory 7</p></div>
+        <div class="polaroid" style="--r:-2deg"><img src="img8.jpg"><p>Memory 8</p></div>
+    </div>
+    <button class="nav-btn" onclick="next()">Secret ➡️</button>
+</section>
+
+<section class="page">
+    <h2>💌 A Note For You</h2>
+    <div class="envelope-box" onclick="openLetter()"></div>
+    <p style="margin-top:20px">Tap to open</p>
+    <button class="nav-btn" id="letterContinue" style="display:none" onclick="next()">The Question 💍</button>
+</section>
+
+<section class="page">
+    <h1 id="ask-title">Will You Be My Valentine?</h1>
+    <p id="ask-msg">Think very carefully...</p>
+    <div class="btn-group">
+        <button class="yes-btn" id="yesBtn" onclick="handleYes()">YES! ❤️</button>
+        <button class="no-btn" id="noBtn" onmouseover="handleNo()" onclick="handleNo()">No</button>
+    </div>
+</section>
+
+<section class="page">
+    <h1 class="animate__animated animate__tada" style="font-size: 4rem;">YES! 🎉</h1>
+    <p style="font-size: 1.5rem;">I knew you'd say yes! ❤️</p>
+</section>
+
+<div id="letter-modal">
+    <div class="letter-paper">
+        <h2>To My Favorite,</h2>
+        <p>I put all my memories into this for you because you are my favorite part of life.</p>
+        <p>I love you more than words can say. Thank you for everything.</p>
+        <button class="nav-btn" style="width:100%" onclick="closeLetter()">Close & Continue</button>
+    </div>
+</div>
+
+<div class="progress" id="dots"></div>
+
+<script>
+const pages = document.querySelectorAll('.page');
+let current = 0;
+let yesClicks = 0;
+let noClicks = 0;
+
+const noResponses = [
+    "Are you sure? 🥺", "Think again... 🧐", "Pssh, try again!", 
+    "Error 404: No not found", "Click the green one!", 
+    "You're joking, right?", "Wrong button! 😂", "Nice try, sneaky!"
+];
+
+/* Nav */
+const dotsBox = document.getElementById('dots');
+pages.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    dotsBox.appendChild(d);
+});
+
+function show(i) {
+    pages[current].classList.remove('active');
+    pages[i].classList.add('active');
+    document.querySelectorAll('.dot').forEach((d, idx) => d.classList.toggle('active', idx === i));
+    current = i;
+}
+function next() { if(current < pages.length-1) show(current+1); }
+function start() { document.getElementById('music').play().catch(()=>{}); next(); }
+
+/* Typing */
+const txt = "I made this for you...";
+let char = 0;
+(function type() {
+    if(char < txt.length) {
+        document.getElementById('typing').innerHTML += txt[char++];
+        setTimeout(type, 70);
+    }
+})();
+
+/* Letter */
+function openLetter() { document.getElementById('letter-modal').style.display = 'flex'; }
+function closeLetter() { 
+    document.getElementById('letter-modal').style.display = 'none'; 
+    document.getElementById('letterContinue').style.display = 'inline-block';
+}
+
+/* YES Logic */
+function handleYes() {
+    yesClicks++;
+    const btn = document.getElementById('yesBtn');
+    const msg = document.getElementById('ask-msg');
+    
+    if (yesClicks === 1) {
+        btn.innerText = "Are you 100% sure?";
+        msg.innerText = "Wait! Think about it!";
+    } else if (yesClicks === 2) {
+        btn.innerText = "REALLY REALLY SURE??";
+        msg.innerText = "Last chance to change your mind!";
+    } else if (yesClicks === 3) {
+        btn.innerText = "CLICK ONE MORE TIME! 💖";
+        msg.innerText = "Okay, I believe you now...";
+    } else {
+        celebrate();
+    }
+}
+
+/* NO Logic - Jumping & Talking */
+function handleNo() {
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    
+    // 1. Change Text
+    noBtn.innerText = noResponses[noClicks % noResponses.length];
+    noClicks++;
+    
+    // 2. Jumping Logic
+    const padding = 50;
+    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+    
+    const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+    const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+    
+    noBtn.style.position = "fixed";
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
+    
+    // 3. Make YES button bigger
+    const currentScale = 1 + (noClicks * 0.15);
+    yesBtn.style.transform = `scale(${currentScale})`;
+}
+
+function celebrate() {
+    show(8);
+    for(let i=0; i<100; i++) {
+        const c = document.createElement('div');
+        c.style.position = 'fixed'; c.style.width = '10px'; c.style.height = '10px';
+        c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 70%)`;
+        c.style.left = Math.random()*100+'vw'; c.style.top = '-20px';
+        c.style.zIndex = '2000';
+        c.animate([{transform: 'translateY(0)'}, {transform: 'translateY(110vh) rotate(720deg)'}], {duration: Math.random()*2000+2500, iterations: 1});
+        document.body.appendChild(c);
+    }
+}
+</script>
+</body>
+</html>
